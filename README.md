@@ -1,7 +1,3 @@
-Absolutely! Here's a cleaner, emoji-light version of the README that feels more natural and professional:
-
----
-
 # Reddit Alerts Bot
 
 Scan your favorite subreddits for keywords and get alerted via Email and Telegram — all managed through a simple web interface.
