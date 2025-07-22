@@ -23,16 +23,33 @@ reddit = praw.Reddit(
 CONFIG_FILE = "config.json"
 SEEN_FILE = "seen_posts.json"
 
-def load_config():
-    if not os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, "w") as f:
-            json.dump({"keywords": [], "subreddits": []}, f)
-    with open(CONFIG_FILE) as f:
-        return json.load(f)
 
-def save_config(config):
-    with open(CONFIG_FILE, "w") as f:
-        json.dump(config, f)
+
+USERS_FILE = "users.json"
+
+def load_user_config(user_id: str):
+    if not os.path.exists(USERS_FILE):
+        return {"keywords": [], "subreddits": []}
+    with open(USERS_FILE, "r") as f:
+        users = json.load(f)
+    return users.get(user_id, {"keywords": [], "subreddits": []})
+
+def save_user_config(user_id: str, config: dict):
+    if os.path.exists(USERS_FILE):
+        with open(USERS_FILE, "r") as f:
+            users = json.load(f)
+    else:
+        users = {}
+    users[user_id] = config
+    with open(USERS_FILE, "w") as f:
+        json.dump(users, f, indent=2)
+
+def get_all_users():
+    if not os.path.exists(USERS_FILE):
+        return []
+    with open(USERS_FILE, "r") as f:
+        users = json.load(f)
+    return list(users.keys())
 
 def save_seen(post_ids):
     with open(SEEN_FILE, "w") as f:
@@ -60,8 +77,8 @@ def send_telegram(message):
     payload = {"chat_id": TELEGRAM_CHAT_ID, "text": message}
     requests.post(url, json=payload)
 
-def scan_reddit():
-    config = load_config()
+def scan_reddit(user_id):
+    config = load_user_config(user_id)
     seen = load_seen()
     new_posts = []
 
