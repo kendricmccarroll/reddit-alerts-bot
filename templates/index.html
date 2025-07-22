@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reddit Alerts Config</title>
+</head>
+<body>
+  <h1>Reddit Alerts Bot</h1>
+
+  <h2>Current Config</h2>
+  <form method="post" action="/delete">
+    <h3>Keywords:</h3>
+    <ul>
+      {% for kw in config.keywords %}
+        <li>{{ kw }} <button type="submit" name="keyword" value="{{ kw }}">Delete</button></li>
+      {% endfor %}
+    </ul>
+    <h3>Subreddits:</h3>
+    <ul>
+      {% for sub in config.subreddits %}
+        <li>{{ sub }} <button type="submit" name="subreddit" value="{{ sub }}">Delete</button></li>
+      {% endfor %}
+    </ul>
+  </form>
+
+  <h2>Add New</h2>
+  <form method="post" action="/add">
+    Keyword: <input name="keyword" />
+    Subreddit: <input name="subreddit" />
+    <button type="submit">Add</button>
+  </form>
+
+  <h2>Trigger Scan</h2>
+  <form method="post" action="/scan">
+    <button type="submit">Scan Now</button>
+  </form>
+</body>
+</html>
