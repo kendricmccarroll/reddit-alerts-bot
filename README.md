@@ -22,6 +22,8 @@ Scan your favorite subreddits for keywords and get alerted via Email and Telegra
 ```bash
 git clone https://github.com/yourname/reddit-alerts-bot.git
 cd reddit-alerts-bot
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
